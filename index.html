@@ -7,20 +7,41 @@
 
   <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#ffffff" />
+
   <style>
     body { font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", "Segoe UI", Arial; margin: 16px; }
     button { padding: 10px 12px; margin: 6px 6px 6px 0; }
     .row { display: flex; flex-wrap: wrap; gap: 10px; }
-    .thumb { width: 120px; border: 1px solid #ddd; border-radius: 10px; padding: 8px; }
-    .thumb img { width: 100%; border-radius: 8px; display: block; }
+    .thumb { width: 140px; border: 1px solid #ddd; border-radius: 12px; padding: 8px; }
+    .thumb img { width: 100%; border-radius: 10px; display: block; }
     .thumb small { display: block; margin-top: 6px; color: #666; word-break: break-all; }
+    .btns { margin-top: 6px; display: flex; gap: 6px; flex-wrap: wrap; }
+    .btns button { padding: 8px 10px; margin: 0; }
+
+    /* Modal */
+    .modal {
+      position: fixed; inset: 0; background: rgba(0,0,0,.55);
+      display: none; align-items: center; justify-content: center;
+      z-index: 9999; padding: 16px;
+    }
+    .modal.show { display: flex; }
+    .panel {
+      background: #fff; border-radius: 14px; width: min(900px, 100%);
+      padding: 12px; box-shadow: 0 10px 30px rgba(0,0,0,.2);
+    }
+    .panel h3 { margin: 6px 0 10px; }
+    .panel .tools { display:flex; gap:8px; flex-wrap: wrap; align-items: center; }
+    .panel .tools button { margin: 0; }
+    .hint { color:#666; font-size: 14px; margin: 8px 0 0; }
+
+    canvas { width: 100%; height: auto; border-radius: 12px; border: 1px solid #eee; background: #fafafa; }
   </style>
 </head>
+
 <body>
   <h2>SnapDoc（無 OCR）</h2>
 
   <div class="row">
-    <!-- iPhone：capture=environment 會直接開後鏡頭 -->
     <input id="picker" type="file" accept="image/*" capture="environment" multiple />
   </div>
 
@@ -34,8 +55,4 @@
   <p id="status"></p>
   <div id="gallery" class="row"></div>
 
-  <!-- pdf-lib CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
-  <script src="app.js"></script>
-</body>
-</html>
+  <!-- Modal for Manual/Auto straighten --
